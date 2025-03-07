@@ -133,12 +133,6 @@ pub enum CrackProgress {
     Progress(u64),
 }
 
-#[derive(Debug, Clone)]
-pub enum CrackerEvent {
-    Started,
-    Finished(Vec<i64>),
-}
-
 #[repr(C)]
 pub struct VecI64 {
     ptr: *const i64,
