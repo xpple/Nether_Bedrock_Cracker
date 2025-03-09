@@ -113,7 +113,7 @@ pub extern fn crack(blocks_ptr: *const Block, len: usize, threads: u64, mode: Be
     crack_internal(blocks_owned, threads, mode, output_mode).into()
 }
 
-pub fn crack_internal(blocks: Vec<Block>, threads: u64, mode: BedrockGeneration, output_mode: OutputMode, ) -> Vec<i64> {
+fn crack_internal(blocks: Vec<Block>, threads: u64, mode: BedrockGeneration, output_mode: OutputMode) -> Vec<i64> {
     let (sender, receiver) = channel();
 
     search_bedrock_pattern(&*blocks, threads, mode, output_mode, sender);
@@ -135,8 +135,8 @@ pub enum CrackProgress {
 
 #[repr(C)]
 pub struct VecI64 {
-    ptr: *const i64,
-    len: usize
+    pub ptr: *const i64,
+    pub len: usize
 }
 
 impl Into<VecI64> for Vec<i64> {
