@@ -51,7 +51,7 @@ fn main() {
         .collect();
 
     let seeds = crack(positions.as_ptr(), positions.len(), 11, BedrockGeneration::Normal, OutputMode::WorldSeed);
-    let seeds = unsafe { std::slice::from_raw_parts(seeds.ptr, seeds.len) }.to_vec();
+    let seeds = unsafe { Vec::from_raw_parts(seeds.ptr as *mut i64, seeds.len, seeds.len) };
 
     println!("Expecting: {}", 765906787396911863i64);
 

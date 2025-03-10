@@ -110,7 +110,13 @@ pub extern fn crack(blocks_ptr: *const Block, len: usize, threads: u64, mode: Be
 
     let blocks_owned = blocks.to_vec();
 
-    crack_internal(blocks_owned, threads, mode, output_mode).into()
+    let seeds = crack_internal(blocks_owned, threads, mode, output_mode);
+    let result = VecI64 {
+        ptr: seeds.as_ptr(),
+        len: seeds.len(),
+    };
+    std::mem::forget(seeds);
+    result
 }
 
 fn crack_internal(blocks: Vec<Block>, threads: u64, mode: BedrockGeneration, output_mode: OutputMode) -> Vec<i64> {
@@ -127,6 +133,17 @@ fn crack_internal(blocks: Vec<Block>, threads: u64, mode: BedrockGeneration, out
     seeds
 }
 
+#[no_mangle]
+pub extern fn free_vec(vec: VecI64) {
+    if vec.ptr.is_null() {
+        return;
+    }
+
+    unsafe {
+        let _ = Vec::from_raw_parts(vec.ptr as *mut i64, vec.len, vec.len);
+    }
+}
+
 #[derive(Clone, Debug)]
 pub enum CrackProgress {
     Seed(u64),
@@ -137,13 +154,4 @@ pub enum CrackProgress {
 pub struct VecI64 {
     pub ptr: *const i64,
     pub len: usize
-}
-
-impl Into<VecI64> for Vec<i64> {
-    fn into(self) -> VecI64 {
-        VecI64 {
-            ptr: self.as_ptr(),
-            len: self.len(),
-        }
-    }
 }
