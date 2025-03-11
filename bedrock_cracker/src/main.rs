@@ -1,7 +1,7 @@
-use bedrock_cracker::crack;
-use bedrock_cracker::raw_data::block::Block;
-use bedrock_cracker::raw_data::block_type::BlockType;
-use bedrock_cracker::raw_data::modes::{BedrockGeneration, OutputMode};
+use libbedrockcracker::crack;
+use libbedrockcracker::raw_data::block::Block;
+use libbedrockcracker::raw_data::block_type::BlockType;
+use libbedrockcracker::raw_data::modes::{BedrockGeneration, OutputMode};
 
 const DATA: &str =
 "-1 123 -7 Bedrock

@@ -4,7 +4,7 @@ version = "0.2.5"
 edition = "2021"
 
 [lib]
-name = "bedrock_cracker"
+name = "libbedrockcracker"
 crate-type = ["rlib", "cdylib"]
 
 [dependencies]
